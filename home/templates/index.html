@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock title %}
+    
+{% block content %}
+<header class="section__container header__container" id="home">
+  <div class="header__image">
+    <img src="{% static 'images/background.jpg' %}" alt="header" />
+  </div>
+  <div class="header__content">
+    <div>
+      <h1>WELCOME TO MLAYISI HOLDINGS</h1>
+      <i>
+        - Affordable accommodations tailored for students and college life.
+      </i>
+    </div>
+  </div>
+</header>
+
+<section class="section__container product__container" id="accommodation">
+  <h3 class="section__header">Available accommodations</h3> 
+  <div class="container mt-5">
+    <div class="row">
+      {% for accommodation in accommodations %}
+      <div class="col-md-4 mb-4">
+          <a href="{% url 'view_accommodation' accommodation.id %}" class="text-decoration-none">
+           
+               <div class="card product__card h-200">
+                  {% if accommodation.logo %}
+                <img src="{{ accommodation.logo.url }}" class="card-img-top" alt="{{ accommodation.accommodation_name }}">
+            {% else %}
+                <img src="{% static 'images/no-image.png' %}"  height="250" class="card-img-top" alt="Default Logo">
+            {% endif %}
+                  <div class="card-body">
+                    <h5 class="card-title"><strong>{{ accommodation.accommodation_name }}</strong></h5>
+                    <h6 style="color: grey;">{{ accommodation.address }}</h6>
+                    <p class="card-text">R {{ accommodation.price }}</p>
+                  </div>
+                  <div class="card-footer">
+                      <a href="{% url 'view_accommodation' accommodation.id %}" class="btn btn-outline-primary w-100">View accommodation</a>
+                  </div>
+              </div>
+          </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section__container deals__container">
+  <div class="deals__card">
+    <h2 class="section__header">Hot 🔥 deals for students</h2>
+    <p>Explore budget-friendly housing options for your academic journey.</p>
+  </div>
+  <div class="deals__card">
+    <span><i class="ri-cash-line"></i></span>
+    <h4>Special student discounts</h4>
+    <p>Enjoy discounts on student housing to make your stay more affordable.</p>
+  </div>
+  <div class="deals__card">
+    <span><i class="ri-calendar-schedule-line"></i></span>
+    <h4>Flexible terms</h4>
+    <p>
+      Choose from flexible payment plans that suit your semester or yearly schedules.
+    </p>
+  </div>
+  <div class="deals__card">
+    <span><i class="ri-money-rupee-circle-line"></i></span>
+    <h4>Save more</h4>
+    <p>
+      Secure quality accommodation at competitive prices designed for students.
+    </p>
+  </div>
+</section>
+
+<section class="section__container about__container" id="about">
+  <div class="about__header">
+    <div>
+      <h2 class="section__header">About us</h2>
+      <p class="section__description">
+        Join us in providing students and college students with comfortable and affordable accommodations designed for academic success and personal convenience.
+      </p>
+    </div>
+    <button class="about__btn">Learn More</button>
+  </div>
+  <div class="about__content">
+    <div class="about__image">
+      <img src="{% static 'images/about.png' %}" alt="about" />
+    </div>
+    <div class="about__grid">
+      <div class="about__card">
+        <h3>1.</h3>
+        <h4>Who we are</h4>
+        <p>
+          We specialize in providing affordable, quality accommodations for students and college students.
+        </p>
+      </div>
+      <div class="about__card">
+        <h3>2.</h3>
+        <h4>What do we do</h4>
+        <p>
+          We connect students with secure, comfortable housing near their educational institutions.
+        </p>
+      </div>
+      <div class="about__card">
+        <h3>3.</h3>
+        <h4>How do we help</h4>
+        <p>
+          Our platform makes it easy for students to find the perfect place to live while they focus on their studies.
+        </p>
+      </div>
+      <div class="about__card">
+        <h3>4.</h3>
+        <h4>Create success stories</h4>
+        <p>
+          Helping students create a home away from home while pursuing their education.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

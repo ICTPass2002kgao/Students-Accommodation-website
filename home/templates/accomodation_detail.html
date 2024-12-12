@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}
+Home | {{ accommodation.accommodation_name }}
+{% endblock title %}
+
+{% block content %}
+<div class="accommodation_card">
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Image Section with Carousel -->
+            <div class="col-md-6">
+                <div id="accommodationCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for image in accommodation.images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ image.image.url }}" 
+                                     class="d-block w-100 accommodation-image" 
+                                     alt="{{ accommodation.accommodation_name }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#accommodationCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#accommodationCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Details Section -->
+            <div class="col-md-6">
+                <h3 class="card-title"><strong>{{ accommodation.accommodation_name }}</strong></h3>
+                <p class="card-text">{{ accommodation.description }}</p>
+                <p class="card-text"><strong>Address:</strong> {{ accommodation.address }}</p>
+                <p class="card-text"><strong>Price:</strong> R {{ accommodation.price }}</p>
+                <p class="card-text"><strong>Contact:</strong> {{ accommodation.email }}</p>
+
+                {% if not user.is_staff %}
+                <form action="{% url 'apply_for_accommodation_django' accommodation.id %}" method="POST">
+                    {% csrf_token %} 
+                    <p></p>
+                    <button type="submit" class="btn btn-outline-primary" style="width: 50%; margin-left: 25%;">Apply now</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<p></p>
+<style>
+    .accommodation-image {
+        height: 500px;
+        object-fit: cover;
+    }
+</style>
+{% endblock content %}
