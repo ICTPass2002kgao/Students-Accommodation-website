@@ -4,8 +4,8 @@ Home | {{ accommodation.accommodation_name }}
 {% endblock title %}
 
 {% block content %}
-<div class="accommodation_card">
-    <div class="container mt-5">
+<div class="accommodation_card" >
+    <div class="container mt-5"style=" border: 1px solid lightgrey; border-radius: 8px; padding: 20px;">
         <div class="row">
             <!-- Image Section with Carousel -->
             <div class="col-md-6">
@@ -37,7 +37,10 @@ Home | {{ accommodation.accommodation_name }}
                 <p class="card-text"><strong>Address:</strong> {{ accommodation.address }}</p>
                 <p class="card-text"><strong>Price:</strong> R {{ accommodation.price }}</p>
                 <p class="card-text"><strong>Contact:</strong> {{ accommodation.email }}</p>
-
+           
+                <h4><strong><i class="bi bi-eye-fill me-2"></i></strong> Views:
+                    {{ accommodation.views }}
+   </h4>
                 {% if not user.is_staff %}
                 <form action="{% url 'apply_for_accommodation_django' accommodation.id %}" method="POST">
                     {% csrf_token %} 
@@ -48,8 +51,11 @@ Home | {{ accommodation.accommodation_name }}
             </div>
         </div>
     </div>
-</div>
-<p></p>
+</div> 
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
 <style>
     .accommodation-image {
         height: 500px;

@@ -59,10 +59,12 @@ ul {
 html,
 body {
   scroll-behavior: smooth; 
+  background-color: rgb(211, 236, 245);
 }
 
 body {
   font-family: "Poppins", sans-serif;
+  background-color: rgb(211, 236, 245);
 }
 
 nav {  

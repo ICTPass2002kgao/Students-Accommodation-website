@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail 
 from django.contrib.auth import logout 
 
+from django.db.models import Count, Sum
  
 
 ################################## ENDPOINTS FOR WEB APPLICATION ####################################################
@@ -59,12 +60,16 @@ def user_login(request):
 
 from django.db.models import Count
 
+
+
+
 @login_required
 def dashboard(request):
     if not request.user.is_staff:
         messages.error(request, "Access denied.")
         return redirect('login')
 
+    # Handle POST request to create a new accommodation
     if request.method == 'POST': 
         accommodation_name = request.POST.get('accommodation_name')
         address = request.POST.get('address')
@@ -86,19 +91,45 @@ def dashboard(request):
             logo=logo,
         )
  
+        # Handle multiple images for the accommodation
         images = request.FILES.getlist('images') 
         for image in images:
             AccommodationImage.objects.create(accommodation=accommodation, image=image)
- 
-    accommodations = Accommodation.objects.annotate(application_count=Count('application'))
-    applications = Application.objects.all()
 
+    # Aggregate statistics
+    total_accommodations = Accommodation.objects.count()
+    total_views = Accommodation.objects.aggregate(Sum('views'))['views__sum'] or 0
+    total_applications = Application.objects.count()
+
+    # Dynamic data for views chart
+    views_data = {
+        'labels': list(Accommodation.objects.values_list('accommodation_name', flat=True)),
+        'values': list(Accommodation.objects.values_list('views', flat=True)),
+    }
+
+    # Dynamic data for applications chart
+    applications_data = {
+        'labels': list(
+            Accommodation.objects.annotate(application_count=Count('application'))
+            .values_list('accommodation_name', flat=True)
+        ),
+        'values': list(
+            Accommodation.objects.annotate(application_count=Count('application'))
+            .values_list('application_count', flat=True)
+        ),
+    }
+
+    # Pass data to the template
     context = {
-        'accommodations': accommodations,
-        'applications': applications,
-        'total_accommodations': accommodations.count(),
-        'pending_requests': 12,  
-        'total_applications': applications.count(),  
+        'user': request.user,
+        'total_accommodations': total_accommodations,
+        'total_views': total_views,
+        'total_applications': total_applications,
+        'views_data': views_data,
+        'applications_data': applications_data,
+        'accommodations': Accommodation.objects.all(),
+        'applications': Application.objects.all(),
+        'pending_requests': 12,  # Replace with dynamic data if necessary
     }
 
     return render(request, 'dashboard.html', context)
