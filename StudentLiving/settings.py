@@ -6,13 +6,13 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Secret Key
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-default-key')
+SECRET_KEY = 'django-insecure-=vex5-bxolz-7_$9l71&_zufoe@2f3v-^*9+uuhdgu8-g2q*en'
 
 # Debug Mode
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 # Allowed Hosts
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
+ALLOWED_HOSTS = ["*"]
 
 # Installed Apps
 INSTALLED_APPS = [
@@ -24,10 +24,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'storages',
+    "corsheaders",
 ]
-
+CORS_ALLOW_ALL_ORIGINS = True
 # Middleware
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -92,10 +94,13 @@ AWS_DEFAULT_ACL = config('AWS_DEFAULT_ACL', default=None)
 AWS_S3_VERIFY = config('AWS_S3_VERIFY', default=True, cast=bool)
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/media/'
 
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/'
+STATIC_URL = '/static/'
+# STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/'
+MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/'
+MEDIA_URL = '/media/'
+
 
 # Static and Media
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
