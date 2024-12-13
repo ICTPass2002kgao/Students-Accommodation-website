@@ -72,22 +72,16 @@ def dashboard(request):
     # Handle POST request to create a new accommodation
     if request.method == 'POST': 
         accommodation_name = request.POST.get('accommodation_name')
-        address = request.POST.get('address')
-        email = request.POST.get('email')
+        address = request.POST.get('address') 
         description = request.POST.get('description')
-        price = request.POST.get('price')
-        offered_amenities = request.POST.get('offered_amenities')
-        accommodated_universities = request.POST.get('accommodated_universities')
+        price = request.POST.get('price')  
         logo = request.FILES.get('logo')
  
         accommodation = Accommodation.objects.create(
             accommodation_name=accommodation_name,
-            address=address,
-            email=email,
+            address=address, 
             description=description,
-            price=price,
-            offered_amenities=offered_amenities,
-            accommodated_universities=accommodated_universities,
+            price=price,  
             logo=logo,
         )
  

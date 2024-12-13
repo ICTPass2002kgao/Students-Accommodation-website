@@ -1,19 +1,14 @@
 import uuid
 from django.db import models
-from django.contrib.auth.models import User
-
-from django.contrib.auth.models import User
-from django.db import models
+from django.contrib.auth.models import User  
  
 class Accommodation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     accommodation_name = models.CharField(max_length=120)
     address = models.CharField(max_length=120)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(default='maphilegman@gmail.com')
     description = models.TextField()
-    price = models.DecimalField(decimal_places=2, max_digits=13)
-    offered_amenities = models.TextField()
-    accommodated_universities = models.CharField(max_length=255)
+    price = models.DecimalField(decimal_places=2, max_digits=13)  
     logo = models.ImageField(upload_to="landlord_logos/", null=True, blank=True)
     views = models.PositiveIntegerField(default=0)
 

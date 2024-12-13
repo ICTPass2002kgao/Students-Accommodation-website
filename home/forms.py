@@ -1,14 +1,9 @@
-from django import forms
-from .models import Accommodation
-from django import forms
+from django import forms  
 from django.contrib.auth.models import User
-from .models import Student
-import re 
+from .models import Student 
 import uuid
 
-from django.core.exceptions import ValidationError
-from django import forms
-from .models import Accommodation, AccommodationImage
+from django.core.exceptions import ValidationError 
 
 # class AccommodationForm(forms.ModelForm):
 #     images = forms.FileField(
