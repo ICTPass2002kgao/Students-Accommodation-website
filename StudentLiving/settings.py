@@ -40,7 +40,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'StudentLiving.urls'
-LOGIN_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/auth/login/'
 
 # Templates
