@@ -70,11 +70,11 @@ WSGI_APPLICATION = 'StudentLiving.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
+        'NAME': 'student_living_db',
+        'USER': 'admin',
+        'PASSWORD': 'ICTPass2022',
+        'HOST': 'studentlivingdatabases.cdeowg6iyzuq.eu-north-1.rds.amazonaws.com',
+        'PORT': 3306,
     }
 }
 
