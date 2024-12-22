@@ -66,36 +66,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StudentLiving.wsgi.application'
 
-# Database
+from .utils import get_database_settings, get_email_settings, get_aws_settings
+
+# Database Settings
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-    }
+    "default": get_database_settings()
 }
 
-# Email Configuration
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+# Email Settings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+email_settings = get_email_settings()
+EMAIL_HOST_USER = email_settings["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = email_settings["EMAIL_HOST_PASSWORD"]
+DEFAULT_FROM_EMAIL = email_settings["DEFAULT_FROM_EMAIL"]
 
-# AWS S3 Configuration
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME')
-AWS_S3_SIGNATURE_NAME = env('AWS_S3_SIGNATURE_NAME')
-AWS_S3_FILE_OVERWRITE = env.bool('AWS_S3_FILE_OVERWRITE', default=False)
-AWS_DEFAULT_ACL = env('AWS_DEFAULT_ACL', default=None)
-AWS_S3_VERIFY = env.bool('AWS_S3_VERIFY', default=True)
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True 
+# AWS S3 Storage Settings
+aws_settings = get_aws_settings()
+AWS_ACCESS_KEY_ID = aws_settings["AWS_ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = aws_settings["AWS_SECRET_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = aws_settings["AWS_STORAGE_BUCKET_NAME"]
+AWS_S3_REGION_NAME = aws_settings["AWS_S3_REGION_NAME"]
+AWS_S3_SIGNATURE_NAME = aws_settings["AWS_S3_SIGNATURE_NAME"]
+AWS_S3_FILE_OVERWRITE = aws_settings["AWS_S3_FILE_OVERWRITE"]
+AWS_DEFAULT_ACL = aws_settings["AWS_DEFAULT_ACL"]
+AWS_S3_VERIFY = aws_settings["AWS_S3_VERIFY"]
+
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
