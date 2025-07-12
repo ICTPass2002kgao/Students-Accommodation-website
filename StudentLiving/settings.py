@@ -1,19 +1,15 @@
 import os
-from pathlib import Path
-import environ
-
-env = environ.Env()
-environ.Env.read_env()
+from pathlib import Path 
+ 
 
 # Base Directory
-BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+BASE_DIR = Path(__file__).resolve().parent.parent 
 
 # Secret Key
 SECRET_KEY = 'django-insecure-=vex5-bxolz-7_$9l71&_zufoe@2f3v-^*9+uuhdgu8-g2q*en'
 
 # Debug Mode
-DEBUG = env.bool('DEBUG', default=True)
+DEBUG = False
 
 # Allowed Hosts
 ALLOWED_HOSTS = ["*"]
@@ -65,42 +61,31 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'StudentLiving.wsgi.application'
-
-from .utils import get_database_settings, get_email_settings, get_aws_settings
+ 
 
 # Database Settings
 DATABASES = {
-    "default": get_database_settings()
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
+
 # Email Settings
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-email_settings = get_email_settings()
-EMAIL_HOST_USER = email_settings["EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = email_settings["EMAIL_HOST_PASSWORD"]
-DEFAULT_FROM_EMAIL = email_settings["DEFAULT_FROM_EMAIL"]
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend" 
+EMAIL_HOST_USER = "kgaogelodeveloper@gmail.com"
+EMAIL_HOST_PASSWORD = "ornq pfjn cbga iykr"
+DEFAULT_FROM_EMAIL = "kgaogelodeveloper@gmail.com"
 
 EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True 
-# AWS S3 Storage Settings
-aws_settings = get_aws_settings()
-AWS_ACCESS_KEY_ID = aws_settings["AWS_ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = aws_settings["AWS_SECRET_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = aws_settings["AWS_STORAGE_BUCKET_NAME"]
-AWS_S3_REGION_NAME = aws_settings["AWS_S3_REGION_NAME"]
-AWS_S3_SIGNATURE_NAME = aws_settings["AWS_S3_SIGNATURE_NAME"]
-AWS_S3_FILE_OVERWRITE = aws_settings["AWS_S3_FILE_OVERWRITE"]
-AWS_DEFAULT_ACL = aws_settings["AWS_DEFAULT_ACL"]
-AWS_S3_VERIFY = aws_settings["AWS_S3_VERIFY"]
+# AWS S3 Storage Settings 
 
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+ 
 STATIC_URL = '/static/'
 # STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/'
-MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/'
 MEDIA_URL = '/media/'
 
 
