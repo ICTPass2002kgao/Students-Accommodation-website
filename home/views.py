@@ -57,9 +57,7 @@ def user_login(request):
         form = LoginForm()
 
     return render(request, 'login.html', {'form': form})
-
-from django.db.models import Count
-
+ 
 
 
 
@@ -141,7 +139,7 @@ Accommodation Team
     send_mail(
         student_email_subject,
         student_email_body,
-        'studentlivingdelivery@gmail.com',
+        'kgaogelodeveloper@gmail.com',
         [application.student.email],
         fail_silently=False,
     )
@@ -161,7 +159,7 @@ Accommodation Team
     send_mail(
         landlord_email_subject,
         landlord_email_body,
-        'studentlivingdelivery@gmail.com',
+        'kgaogelodeveloper@gmail.com',
         [application.accommodation.email],
         fail_silently=False,
     )
@@ -236,7 +234,7 @@ def application_feedback(request, accommodation_id):
             send_mail(
                 subject,
                 message,
-                'studentlivingdelivery@gmail.com',  
+                'kgaogelodeveloper@gmail.com',  
                 [student.email],  
                 fail_silently=False,
             )
